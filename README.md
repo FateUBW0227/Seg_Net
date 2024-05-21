@@ -16,9 +16,12 @@
 
 - Data Preprocess
 
+  ```
+  
+  ```
 
-
-
+  - Input : Raw images of size $512\times 512 \times 512$ and corresponding labeled swc files.
+  - Output : Cutted raw image of size $128\times 128 \times 128$ and corresponding mask images.
 
 - Train Segment model with command
 
@@ -30,7 +33,13 @@
 
 ## Run
 
+- Run model with command
 
+  ```
+  python BigImgPredict.py
+  ```
+
+  
 
 
 
