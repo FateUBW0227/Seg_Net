@@ -10,28 +10,22 @@ from Net import Trainer
 from MyUtil import GetLossOptimiLr
 
 '''
-可视化
 cmd
 activate QxzDeep
 cd logs
 tensorboard --logdir "./" --host=0.0.0.0
 
 
-exp005 为WoYi第一个数据集的分割模型
-exp008 为WoYi第二个数据集的分割模型
-exp009 清华第二个数据集的分割模型
-exp010 Limo数据的分割模型
-exp011 ZjHospital(0036)Dataset1数据分割模型
 '''
 
 def Train():
-    rootPath = '/media/MD3400-2/Cailin/training_data' # 数据路径
-    trainTxt = "train.txt"         # 训练的txt名称
-    valTxt = "test.txt"             # 验证的txt名称
-    imgSize = np.array([128, 128, 128], dtype=np.int32)         # 图像尺寸
+    rootPath = 'E:/Training/Paper/Data/training_data' # data path
+    trainTxt = "train.txt"         # txt file for training
+    valTxt = "test.txt"             # txt file for validation
+    imgSize = np.array([128, 128, 128], dtype=np.int32)         # Img size
     batchSize = 2
     device = torch.device('cuda:0')
-    logPath = './logs/'             # 日志路径
+    logPath = './logs/'             # log dir
     if not os.path.isdir(logPath): os.makedirs(logPath)
     logName = len(os.listdir(logPath))
     expName = 'exp%s' % str(logName).zfill(3)
@@ -43,14 +37,14 @@ def Train():
         else:
             break
     writer = SummaryWriter(logAdd)
-    savePath = r'./ModelSave/%s' % expName          # 模型保存路径
-    # 加载数据
+    savePath = r'./ModelSave/%s' % expName          # path for saving model.
+    # load data.
     train_dataset = GetMultiTypeMemoryDataSetAndCropQxz(rootPath, trainTxt, imgSize)
     train_loader = DataLoader(train_dataset, batch_size=batchSize, shuffle=True, num_workers=0)
     val_dataset = GetMultiTypeMemoryDataSetAndCropQxz(rootPath, valTxt, imgSize)
     val_loader = DataLoader(val_dataset, batch_size=batchSize, shuffle=True, num_workers=0)
     if not os.path.isdir(savePath): os.makedirs(savePath)
-    # 加载网络
+    # load net.
     modelCfg = {
         'name': 'UNet3D',
         # number of input channels to the model
@@ -77,10 +71,9 @@ def Train():
     model = LoadModel(modelCfg)
     model.to(device)
     model.train(True)
-    # 获取损失优化器学习率
     loss_criterion, optimizer, lr_scheduler, eval_metric = GetLossOptimiLr(model)
     eval_metric.to(device)
-    # 训练
+
     netObj = Trainer(train_loader, val_loader, model, loss_criterion, optimizer, lr_scheduler, eval_metric, modelPath=savePath, device=device, batchSize=batchSize)
     netObj.Train(turn=300, writer=writer)
 
