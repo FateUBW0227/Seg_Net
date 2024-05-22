@@ -1,6 +1,6 @@
 ## Prerequisites
 
-1. Install required library
+1. Install required libraries
 
    ```python
    pip install -r requirements.txt
@@ -22,10 +22,11 @@
   python PreMakeData.py
   ```
 
-  Cut raw images and mask images into appropriate size.
+  Cut raw images and mask images into appropriate size with command
 
   ```
-  
+  cd ./preprocess
+  Cut_data.exe
   ```
 
   - Input : Raw images of size $512\times 512 \times 512$ and corresponding labeled swc files.
