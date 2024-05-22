@@ -8,7 +8,7 @@
 
    
 
-2. Install pytorch-3dunet from https://github.com/wolny/pytorch-3dunet
+2. Install pytorch-3dunet from pytorch-3dunet-master.zip
 
 
 
