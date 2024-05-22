@@ -1,0 +1,3 @@
+Image_dir  ./Test/raw_image/
+Mask_dir  ./Test/mask/
+Save_dir    ./Test/Save/
