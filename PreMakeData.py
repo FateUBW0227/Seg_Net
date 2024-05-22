@@ -6,6 +6,7 @@ import shutil
 import numpy as np
 from os.path import join
 
+
 # '''Swc多树拆分'''
 def SplitSwcData(swcData):
     indLs = np.where(swcData[:, -1] == -1)[0].tolist() + [swcData.shape[0]]
@@ -18,6 +19,7 @@ def SplitSwcData(swcData):
         swcDataLs.append(data)
     return swcDataLs
 
+
 '''获取点云核点云'''
 def GetPcKernelPc(pc, kernelArr, imgShape):
     curPc = (pc[:, None] + kernelArr[None]).reshape([-1, 3])
@@ -29,10 +31,11 @@ def GetPcKernelPc(pc, kernelArr, imgShape):
     curPc = np.unique(curPc, axis=0)
     return curPc
 
+
 '''纤维转距离场'''
 def SwcToDF():
-    swcPath = r'D:\qxz\MyProject\KKMarkCellBody\Code\NeuronTrack\DataSet\ZjHospital(0036)Dataset1\SegMentDataSet\TrainDataSet2\SwcCurve'
-    savePath = r'D:\qxz\MyProject\KKMarkCellBody\Code\NeuronTrack\DataSet\ZjHospital(0036)Dataset1\SegMentDataSet\TrainDataSet2\mask'
+    swcPath = r'.\swc_files'
+    savePath = r'.\mask'
     kernelLen = 3
     imgShape = np.array([512, 512, 512], dtype=np.int32)
     maxD = ((kernelLen ** 2) * 3) ** 0.5
@@ -81,10 +84,11 @@ def SwcToDF():
         # dfImg2[dfImg2 < 103] = 0
         tifffile.imwrite(join(savePath, nameId + '.tif'), dfImg2, compression='lzw')
 
+
 '''Mask转Swc'''
 def MaskToSwc():
-    maskPath = r'D:\qxz\MyProject\KKMarkCellBody\Code\NeuronTrack\DataSet\mask'
-    swcPath = r'D:\qxz\MyProject\KKMarkCellBody\Code\NeuronTrack\DataSet\maskToSwc'
+    maskPath = r''
+    swcPath = r''
     thre = 135
     os.makedirs(swcPath, exist_ok=True)
     ls = os.listdir(maskPath)
@@ -96,10 +100,11 @@ def MaskToSwc():
             for ii, item in enumerate(pc):
                 f.write('%d %d %d %d %d %d -1\n' % (ii + 1, 1, item[2], item[1], item[0], 1))
 
+
 '''Mask改值转Mask'''
 def MaskToMask():
-    path = r'D:\qxz\MyProject\KKMarkCellBody\Code\NeuronTrack\DataSet\SwcTrainDataSet1\OriDataSet\ProblemData\mask'
-    savePath = r'D:\qxz\MyProject\KKMarkCellBody\Code\NeuronTrack\DataSet\SwcTrainDataSet1\OriDataSet\ProblemData\mask2'
+    path = r''
+    savePath = r''
     os.makedirs(savePath, exist_ok=True)
     ls = os.listdir(path)
     for name in ls:
@@ -107,16 +112,18 @@ def MaskToMask():
         img[img < 108] = 0
         tifffile.imwrite(join(savePath, name), img)
 
+
 def SwcGetTestSwc():
-    path = r'D:\qxz\MyProject\KKMarkCellBody\Code\BrainSegNewQxz\TrackTrainDataSet\SwcDataSet1\TrainDataSet\test.txt'
-    swcPath = r'D:\qxz\MyProject\KKMarkCellBody\Code\BrainSegNewQxz\TrackTrainDataSet\SwcDataSet1\TrainDataSet\swc'
-    savePath = r'D:\qxz\MyProject\KKMarkCellBody\Code\BrainSegNewQxz\TrackTrainDataSet\SwcDataSet1\OldFindResult\swc'
+    path = r''
+    swcPath = r''
+    savePath = r''
     os.makedirs(savePath, exist_ok=True)
     with open(path, 'r') as f:
         dataIdLs = f.read().strip().split('\n')
     for dataId in dataIdLs:
         name = os.path.splitext(dataId)[0] + '.swc'
         shutil.copy(join(swcPath, name), join(savePath, name))
+
 
 if __name__ == '__main__':
     SwcToDF()
