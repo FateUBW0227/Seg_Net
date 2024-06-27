@@ -50,7 +50,7 @@
 
   Input : Raw images of size  $512\times 512 \times 512$
 
-  Output : Segment images of size $512\times 512 \times 512$
+  Output : Segmentation images of size $512\times 512 \times 512$
 
 
 
