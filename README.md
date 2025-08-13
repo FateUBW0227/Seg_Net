@@ -52,6 +52,20 @@
 
   Output : Segmentation images of size $512\times 512 \times 512$
 
+## Citation
+
+If you find our work useful in your research, please consider citing our paper:
+
+```
+Cai Lin, Fan Taiyu, Qu Xuzhong, Zhang Ying, Gou Xianyu, Ding Quanwei, Feng Weihua, Cao Tingting, Lv Xiaohua, Liu Xiuli, Huang Qing, Quan Tingwei, Zeng Shaoqun (2024) PointTree: Automatic and accurate reconstruction of long-range axonal projections of single-neuron eLife 13:RP102840
+
+https://doi.org/10.7554/eLife.102840.2
+```
+
+If you have questions, feel free to contact cailin0227@hust.edu.cn
+
+
+
 
 
 
